@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from .models import Student
 
 # Create your views here.
 @api_view()
@@ -13,3 +13,26 @@ def index(request):
     }
     return Response(data)
 
+@api_view(['POST'])
+def createRecord(request):
+    data = request.data
+    Student.objects.create(**data)
+    print(data)
+    return Response(
+        {   "status" : True,
+            "message" : "Record created"
+        }
+    )
+    
+    
+@api_view(['DELETE'])
+def deleteData(request):
+    data = request.data
+    student_id = data.get('id')
+    Student.objects.filter(id=student_id).delete()
+    return Response(
+        {   "status" : True,
+            "message" : "Record Deleted"
+        }
+    )
+    
