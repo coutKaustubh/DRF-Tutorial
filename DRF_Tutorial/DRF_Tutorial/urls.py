@@ -20,6 +20,6 @@ from home.views import *
 urlpatterns = [
     path('' , index),
     path('create/' , createRecord),
-    path('delete/' , deleteData),
+    path('delete/<id>/' , deleteData),
     path('admin/', admin.site.urls),
 ]

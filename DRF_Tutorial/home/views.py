@@ -26,13 +26,19 @@ def createRecord(request):
     
     
 @api_view(['DELETE'])
-def deleteData(request):
-    data = request.data
-    student_id = data.get('id')
-    Student.objects.filter(id=student_id).delete()
-    return Response(
-        {   "status" : True,
-            "message" : "Record Deleted"
-        }
-    )
+def deleteData(request ,id):
+    try :
+        st = Student.objects.get(id=id).delete()
+        return Response(
+            {   "status" : True,
+                "message" : "Record Deleted"
+            }
+        )
+    except Exception as e:
+        return Response(
+            {   "status" : False,
+                "message" : "Record not deleted"
+            }
+        )
+        
     
