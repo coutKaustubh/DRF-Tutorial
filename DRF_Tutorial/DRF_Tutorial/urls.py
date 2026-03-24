@@ -20,6 +20,8 @@ from home.views import *
 urlpatterns = [
     path('' , index),
     path('create/' , createRecord),
+    path('get/' , getRecord),
+    path('getfromserializers/' , getRecordSerializer),
     path('delete/<id>/' , deleteData),
     path('admin/', admin.site.urls),
 ]

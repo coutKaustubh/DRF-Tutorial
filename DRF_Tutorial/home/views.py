@@ -1,5 +1,6 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from .serializers import *
 from .models import Student
 
 # Create your views here.
@@ -23,7 +24,39 @@ def createRecord(request):
             "message" : "Record created"
         }
     )
+
+
+@api_view(['GET'])
+def getRecord(request):
+    students = []
+    for st in Student.objects.all():
+        students.append(
+            {
+                "id" : st.id,
+                "Name" : st.Name,
+                "Age" : st.Age,
+                "DOB" : st.DOB,
+                "canVote" : st.canVote
+            }
+        )
+    return Response(
+        {   "status" : True,
+            "message" : "Record fetched",
+            "data" : students
+        }
+    )
     
+@api_view(['GET'])
+def getRecordSerializer(request):
+    queryset = Student.objects.all()
+    serializers = Studentserializers(queryset , many = True)
+    
+    return Response(
+        {   "status" : True,
+            "message" : "Record fetched",
+            "data" : serializers.data
+        }
+    )
     
 @api_view(['DELETE'])
 def deleteData(request ,id):
